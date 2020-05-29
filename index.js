@@ -5,20 +5,48 @@ const rl = readline.createInterface({
   output: process.stdout
 });
 
-rl.question(`Hi, I'm a calculator, let's do some math. Enter your equation below:
+
+
+const initialPrompt = () => { 
+  rl.question(`Hi, I'm a calculator, let's do some math. Enter your equation below:
 `, (answer) => {
 
-  calc(answer)
+    calc(answer)
+    continuePrompt();
+  });
+}
 
-  rl.close()
-});
+const continuePrompt = () => { 
+  rl.question(`Do you want to do another calculation? 
+`, (answer) => {
+    this.answer = answer.toLowerCase();
+
+    if (answer === 'yes' || answer === 'y') {
+      nextCalcPrompt();
+    } else {
+      console.log(`Goodbye!`);
+      rl.close();
+    }
+
+  });
+}
+
+const nextCalcPrompt = () => { 
+
+  rl.question(`Nice! Enter your next equation below:
+`, (answer) => {
+
+    calc(answer)
+
+    continuePrompt();
+
+  });
+}
 
 const calc = (answer) => {
-  // this.answer = answer.split(' ')
-  // let n1 = Number(this.answer[0])
-  // let n2 = Number(this.answer[2])
-  // let operator = this.answer[1]
   result = eval(answer)
 
   console.log(`Beep Boop, here is the result: ${result}`);
 }
+
+initialPrompt();
